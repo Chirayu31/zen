@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+  import { page } from '$app/stores'
   import { signIn, signOut } from '@auth/sveltekit/client'
 </script>
 
@@ -18,12 +19,22 @@
     <span class="text-white">devs</span>
   </h3>
 
-  <button
-    class="bg-white w-60 h-16 rounded-full text-[32px] font-semibold hover:scale-105 login-btn cursor-pointer z-10"
-    on:click={() => signIn('google')}
-  >
-    get in
-  </button>
+  {#if !$page.data.session}
+    <button
+      class="bg-white w-60 h-16 rounded-full text-[32px] font-semibold hover:scale-105 login-btn cursor-pointer z-10"
+      on:click={() => signIn('google')}
+    >
+      get in
+    </button>
+  {:else}
+    <a href="/dashboard">
+      <button
+        class="bg-white w-60 h-16 rounded-full text-[32px] font-semibold hover:scale-105 login-btn cursor-pointer z-10"
+      >
+        dashboard
+      </button>
+    </a>
+  {/if}
 
   <div
     class="text-[24px] sm:text-[28px] md:text-[36px] lg:text-[48px] text-center text-white font-bold z-10"
@@ -49,7 +60,6 @@
     );
     backdrop-filter: blur(50px);
     font-family: 'Outfit', sans-serif;
-    z-index: -10;
   }
 
   .landing::before {
