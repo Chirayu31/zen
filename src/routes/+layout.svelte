@@ -1,6 +1,12 @@
 <script>
   import '../app.css'
+  import { page } from '$app/stores'
+  import Navbar from '$lib/components/navbar.svelte'
 </script>
+
+{#if $page.route.id !== '/'}
+  <Navbar />
+{/if}
 
 <slot />
 
