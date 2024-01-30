@@ -21,10 +21,12 @@
   >
     {#each { length: 8 } as _}
       <Card.Root class="w-full max-w-[350px] cursor-pointer hover:scale-[1.01]">
-        <Card.Header>
-          <Card.Title>Pencil</Card.Title>
-          <Card.Description>A Short Description</Card.Description>
-        </Card.Header>
+        <a href="/dashboard/randomProjectId">
+          <Card.Header>
+            <Card.Title>Pencil</Card.Title>
+            <Card.Description>A Short Description</Card.Description>
+          </Card.Header>
+        </a>
       </Card.Root>
     {/each}
   </div>
