@@ -21,7 +21,7 @@
   >
     {#each { length: 8 } as _}
       <Card.Root class="w-full max-w-[350px] cursor-pointer hover:scale-[1.01]">
-        <a href="/dashboard/randomProjectId">
+        <a href="/project/randomProjectId">
           <Card.Header>
             <Card.Title>Pencil</Card.Title>
             <Card.Description>A Short Description</Card.Description>
