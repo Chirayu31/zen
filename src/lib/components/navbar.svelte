@@ -51,7 +51,7 @@
       </Avatar.Root>
     </a>
 
-    <a href="/request">
+    <a href="/requests">
       <p
         class="font-semibold hidden md:block text-lg hover:border-b-2 border-black"
       >
