@@ -1,0 +1,32 @@
+<script lang="ts">
+  import { Button } from '$lib/components/ui/button'
+  import * as Card from '$lib/components/ui/card'
+  import { Input } from '$lib/components/ui/input'
+</script>
+
+<main class="mx-4 md:mx-10 mt-10">
+  <div class="w-full flex justify-center items-center gap-10 my-10">
+    <Input
+      type="text"
+      placeholder="Explore Projects"
+      class="max-w-md text-base"
+    />
+
+    <Button>Search</Button>
+  </div>
+
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-items-center gap-10 mt-16"
+  >
+    {#each { length: 8 } as _}
+      <Card.Root class="w-full max-w-[350px] cursor-pointer hover:scale-[1.01]">
+        <a href="/project/randomProjectId">
+          <Card.Header>
+            <Card.Title>Pencil</Card.Title>
+            <Card.Description>A Short Description</Card.Description>
+          </Card.Header>
+        </a>
+      </Card.Root>
+    {/each}
+  </div>
+</main>
