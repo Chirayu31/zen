@@ -67,6 +67,7 @@ model Project {
   title       String
   description String
   about       String
+  github      String
 
   user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   milestone      Milestone[]
