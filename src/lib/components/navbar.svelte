@@ -38,19 +38,6 @@
       ></iconify-icon>
     </a>
 
-    <a href="/profile">
-      <p
-        class="font-semibold hidden md:block text-lg hover:border-b-2 border-black"
-      >
-        Profile
-      </p>
-
-      <Avatar.Root class="md:hidden w-[30px] h-[30px]">
-        <Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
-        <Avatar.Fallback>CN</Avatar.Fallback>
-      </Avatar.Root>
-    </a>
-
     <a href="/requests">
       <p
         class="font-semibold hidden md:block text-lg hover:border-b-2 border-black"
