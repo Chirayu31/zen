@@ -36,3 +36,22 @@ export async function POST(event) {
         return json({ error: 'Failed to create project' });
     }
 }
+
+export async function GET(event) {
+    const userId: string | undefined = event.cookies.get('userId');
+     if (!userId) {
+        throw redirect(303, '/');
+    }
+
+    try {
+        const projects = await db.project.findMany({
+            where: {
+                userId: userId
+            }
+        });
+        return json(projects);
+    } catch (error) {
+        console.error('Error fetching projects:', error);
+        return json({ error: 'Failed to fetch projects' }, {status:500});
+    }
+}
