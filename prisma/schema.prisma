@@ -88,7 +88,6 @@ model Milestone {
   projectId   String
   title       String
   description String
-  deadline    DateTime
   status      String
   project     Project? @relation(fields: [projectId], references: [id])
 }
