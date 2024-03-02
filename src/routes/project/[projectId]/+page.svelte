@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
   import { page } from '$app/stores'
   import { Badge } from '$lib/components/ui/badge'
   import { Button } from '$lib/components/ui/button'
@@ -14,9 +15,15 @@
     const received = await res.json()
     console.log(received)
   }
+
+  function handleAddMilestone(e: Event) {
+    e.preventDefault()
+
+    goto(`/project/${$page.params.projectId}/add-milestone`)
+  }
 </script>
 
-<main class="flex justify-center mx-2 md:mx-10 mt-10">
+<main class="flex justify-center mx-2 md:mx-10 mt-10 mb-10">
   <div class="flex flex-col w-full max-w-[700px]">
     <div class="flex items-center gap-5">
       <h2 class="text-5xl font-semibold">{data.project.title}</h2>
@@ -53,23 +60,29 @@
       <div class="flex gap-4">
         <h3 class="text-3xl font-bold">Milestones</h3>
         {#if data.project.isOwnProject}
-          <Button variant="outline" class="font-bold text-lg">+</Button>
+          <Button
+            variant="outline"
+            class="font-bold text-lg"
+            on:click={handleAddMilestone}>+</Button
+          >
         {/if}
       </div>
       <div class="flex gap-4">
         <Separator class="mt-2" orientation="vertical" />
         {#if data.project.milestone.length > 0}
-          <div>
-            <div class="mt-4">
-              <div class="flex gap-4">
-                <h4 class="text-2xl font-semibold">Develop feature 4</h4>
-                <Badge>Active</Badge>
+          {#each data.project.milestone as milestone}
+            <div>
+              <div class="mt-4">
+                <div class="flex gap-4">
+                  <h4 class="text-2xl font-semibold">{milestone.title}</h4>
+                  <Badge>{milestone.status}</Badge>
+                </div>
+                <p class="text-gray-700 mt-2 ml-2 spacemono">
+                  {milestone.description}
+                </p>
               </div>
-              <p class="text-gray-700 mt-2 ml-2 spacemono">
-                Description about feature
-              </p>
             </div>
-          </div>
+          {/each}
         {:else}
           <p class="mt-4 text-gray-600 font-semibold text-xl">
             Project have no milestones currently
