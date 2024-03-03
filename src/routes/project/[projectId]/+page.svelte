@@ -4,6 +4,7 @@
   import { Badge } from '$lib/components/ui/badge'
   import { Button } from '$lib/components/ui/button'
   import { Separator } from '$lib/components/ui/separator'
+  import { Edit2Icon } from 'lucide-svelte'
 
   export let data
 
@@ -76,6 +77,13 @@
                 <div class="flex gap-4">
                   <h4 class="text-2xl font-semibold">{milestone.title}</h4>
                   <Badge>{milestone.status}</Badge>
+                  {#if data.project.isOwnProject}
+                    <a
+                      href={`/project/${data.project.id}/edit-milestone/${milestone.id}`}
+                    >
+                      <Edit2Icon />
+                    </a>
+                  {/if}
                 </div>
                 <p class="text-gray-700 mt-2 ml-2 spacemono">
                   {milestone.description}
