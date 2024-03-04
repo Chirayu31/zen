@@ -70,9 +70,9 @@
       </div>
       <div class="flex gap-4">
         <Separator class="mt-2" orientation="vertical" />
+        <div>
         {#if data.project.milestone.length > 0}
           {#each data.project.milestone as milestone}
-            <div>
               <div class="mt-4">
                 <div class="flex gap-4">
                   <h4 class="text-2xl font-semibold">{milestone.title}</h4>
@@ -89,13 +89,13 @@
                   {milestone.description}
                 </p>
               </div>
+              {/each}
+              {:else}
+              <p class="mt-4 text-gray-600 font-semibold text-xl">
+                Project have no milestones currently
+              </p>
+              {/if}
             </div>
-          {/each}
-        {:else}
-          <p class="mt-4 text-gray-600 font-semibold text-xl">
-            Project have no milestones currently
-          </p>
-        {/if}
       </div>
 
       <div class="mt-10 flex justify-center">
