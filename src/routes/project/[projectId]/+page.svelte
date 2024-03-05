@@ -22,6 +22,12 @@
 
     goto(`/project/${$page.params.projectId}/add-milestone`)
   }
+
+  async function handleCollabReq(e: Event){
+    e.preventDefault()
+  
+    goto(`/project/${$page.params.projectId}/send-req`)
+  }
 </script>
 
 <main class="flex justify-center mx-2 md:mx-10 mt-10 mb-10">
@@ -108,7 +114,7 @@
             Delete Project
           </Button>
         {:else}
-          <Button variant="secondary">Send Collaboration Request</Button>
+          <Button variant="secondary" on:click={handleCollabReq}>Send Collaboration Request</Button>
         {/if}
       </div>
     </div>
