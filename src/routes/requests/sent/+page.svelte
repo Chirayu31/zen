@@ -12,12 +12,12 @@
       <a href={`/project/${request.projectId}`}>
         <Card.Header>
           <Card.Title>{request.project.title}</Card.Title>
-          <Card.Description>Requested by {request.sender?.name}</Card.Description>
+          <Card.Description>Requested to {request.project?.user.name}</Card.Description>
         </Card.Header>
         <Card.Content>
           <p>{request.message}</p>
-          <Button class="text-lime-600" variant="link">Accept</Button>
-          <Button class="text-red-500" variant="link">Reject</Button>
+
+          <p class="mt-2">Status: {request.status}</p>
         </Card.Content>
       </a>
     </Card.Root>
