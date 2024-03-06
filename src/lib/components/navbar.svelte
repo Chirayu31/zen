@@ -1,6 +1,5 @@
 <script lang="ts">
   import 'iconify-icon'
-  import * as Avatar from './ui/avatar'
 </script>
 
 <nav
@@ -46,6 +45,17 @@
       </p>
 
       <iconify-icon class="md:hidden text-[30px]" icon="carbon:collaborate"
+      ></iconify-icon>
+    </a>
+
+    <a href="/cotd">
+      <p
+        class="font-semibold hidden md:block text-lg hover:border-b-2 border-black"
+      >
+        COTD
+      </p>
+
+      <iconify-icon class="md:hidden text-[30px]" icon="ph:crown-thin"
       ></iconify-icon>
     </a>
   </div>
