@@ -3,6 +3,8 @@
   import { Input } from '$lib/components/ui/input'
   import * as Select from '$lib/components/ui/select'
   import { Textarea } from '$lib/components/ui/textarea'
+  import {page} from '$app/stores'
+  import { goto } from '$app/navigation'
 
   export let data
   interface FormErrors {
@@ -12,6 +14,7 @@
   }
 
   let errors: FormErrors = {}
+  let submitting = false
 
   function validateForm(formData: FormData) {
     errors = {}
@@ -37,17 +40,28 @@
 
   async function subscribe(event: Event) {
     const form = event.target as HTMLFormElement
-    const data = new FormData(form)
+    const formData = new FormData(form)
 
-    validateForm(data)
+    validateForm(formData)
 
     if (Object.keys(errors).length > 0) {
       return
     }
 
-    const res = await fetch('/api/milestone', { method: 'POST', body: data })
-    const received = await res.json()
-    console.log(received)
+   try {
+      submitting = true 
+      const res = await fetch('/api/milestone', { method: 'POST', body: formData })
+      const received = await res.json()
+      // console.log(received)
+
+      data.project.milestone.push(received)
+
+      goto(`/project/${$page.params.projectId}`)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    } finally {
+      submitting = false
+    }
   }
 </script>
 
@@ -102,6 +116,6 @@
 
     <input type="hidden" name="projectId" value={data.project.id} />
 
-    <Button type="submit" class="mt-4">Submit</Button>
+    <Button type="submit" class="mt-4" disabled={submitting}>Submit</Button>
   </form>
 </main>
