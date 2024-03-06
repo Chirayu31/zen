@@ -7,16 +7,26 @@
   import { Edit2Icon } from 'lucide-svelte'
 
   export let data
+  let deleting = false;
 
   async function deleteProjectHandler(e: Event) {
-    e.preventDefault()
-    const res = await fetch(`/api/project/${$page.params.projectId}`, {
-      method: 'DELETE',
-    })
-    const received = await res.json()
-    console.log(received)
-  }
+    e.preventDefault();
+    if (deleting) return; // Prevent multiple simultaneous deletions
+    deleting = true;
 
+    try {
+      const res = await fetch(`/api/project/${$page.params.projectId}`, {
+        method: 'DELETE',
+      });
+      const received = await res.json();
+      // console.log(received);
+      goto('/dashboard');
+    } catch (error) {
+      console.error('Error deleting project:', error);
+    } finally {
+      deleting = false;
+    }
+  }
   function handleAddMilestone(e: Event) {
     e.preventDefault()
 
@@ -110,6 +120,7 @@
             variant="destructive"
             class="bg-red-500"
             on:click={deleteProjectHandler}
+            disabled={deleting}
           >
             Delete Project
           </Button>
