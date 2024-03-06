@@ -32,4 +32,12 @@
       </Card.Root>
     {/each}
   </div>
+  {#if !data.projects || data.projects.length == 0}
+      <h3 class="text-center font-semibold text-xl">
+        Your Projects will be displayed here. You have not added projects right now.
+      </h3>
+      <p class="text-center text-md mt-4">
+        Click on Add New Button to add projects.
+      </p>
+    {/if}
 </main>
