@@ -5,6 +5,8 @@
 
   let searchQuery = '';
   let projects : any = [];
+  let ifUserSearched = false;
+  let searching = false;
 
   async function searchProjects(searchQuery: string) {
     const response = await fetch("/api/explore", {
@@ -24,10 +26,13 @@
     if (!searchQuery.trim()) return;
 
     try {
+      searching = true;
       projects = await searchProjects(encodeURI(searchQuery));
-      console.log(projects)
+      ifUserSearched = true;
     } catch (error) {
       console.error('Error fetching projects:', error);
+    } finally {
+      searching = false;
     }
   }
 </script>
@@ -41,21 +46,31 @@
       bind:value={searchQuery}
     />
 
-    <Button on:click={handleSearch}>Search</Button>
+    <Button on:click={handleSearch} disabled={searching}>
+      {#if searching}
+        Searching...
+      {:else}
+        Search
+      {/if}
+    </Button>
   </div>
 
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-items-center gap-10 mt-16"
-  >
-    {#each projects as project}
-      <Card.Root class="w-full max-w-[350px] cursor-pointer hover:scale-[1.01]">
-        <a href="/project/{project.id}">
-          <Card.Header>
-            <Card.Title>{project.title}</Card.Title>
-            <Card.Description>{project.description}</Card.Description>
-          </Card.Header>
-        </a>
-      </Card.Root>
-    {/each}
-  </div>
+  {#if !ifUserSearched}
+    <p class="text-gray-500 text-center">Search for user, tech stack, or project</p>
+  {:else if projects.length === 0}
+    <p class="text-gray-500 text-center">No results found</p>
+  {:else}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-items-center gap-10 mt-16">
+      {#each projects as project}
+        <Card.Root class="w-full max-w-[350px] cursor-pointer hover:scale-[1.01]">
+          <a href="/project/{project.id}">
+            <Card.Header>
+              <Card.Title>{project.title}</Card.Title>
+              <Card.Description>{project.description}</Card.Description>
+            </Card.Header>
+          </a>
+        </Card.Root>
+      {/each}
+    </div>
+  {/if}
 </main>
