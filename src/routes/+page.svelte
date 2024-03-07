@@ -62,18 +62,6 @@
     font-family: 'Outfit', sans-serif;
   }
 
-  .landing::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url(https://grainy-gradients.vercel.app/noise.svg);
-    opacity: 0.4;
-    pointer-events: none;
-  }
-
   .main-heading {
     font-family: 'Orbitron', sans-serif;
     text-shadow: 0px 15px 0px #000;

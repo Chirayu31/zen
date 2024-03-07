@@ -2,32 +2,35 @@
   import { Button } from '$lib/components/ui/button'
   import { Textarea } from '$lib/components/ui/textarea'
   import { page } from '$app/stores'
+  import { goto } from '$app/navigation'
+
+  export let data
 
   async function sendCollabRequest(event: Event) {
     event.preventDefault()
 
-    const form = event.target as HTMLFormElement;
-    const data = new FormData(form)
+    const form = event.target as HTMLFormElement
+    const formdata = new FormData(form)
 
     try {
       const res = await fetch(`/api/collaboration/${$page.params.projectId}`, {
         method: 'POST',
-        body: data
+        body: formdata,
       })
 
       if (!res.ok) {
         throw new Error('Error sending collab request')
       }
 
-      await res.json();
-
+      await res.json()
       form.reset()
+      data.project.hasSentCollabReq = true
+      goto(`/project/${$page.params.projectId}`)
     } catch (error) {
       console.error('Error sending collab request:', error)
       alert('Failed to send collab request. Please try again.')
     }
   }
-
 </script>
 
 <main class="flex flex-col w-full items-center">
@@ -37,9 +40,7 @@
     class="flex flex-col w-full max-w-[550px] mt-10 mx-10 gap-2"
     on:submit={sendCollabRequest}
   >
-    <p class="-ml-2 font-semibold text-base text-gray-600">
-      Message
-    </p>
+    <p class="-ml-2 font-semibold text-base text-gray-600">Message</p>
     <Textarea
       name="message"
       class="mb-4"

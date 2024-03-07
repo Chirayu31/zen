@@ -7,24 +7,24 @@
   import { Edit2Icon } from 'lucide-svelte'
 
   export let data
-  let deleting = false;
+  let deleting = false
 
   async function deleteProjectHandler(e: Event) {
-    e.preventDefault();
-    if (deleting) return; // Prevent multiple simultaneous deletions
-    deleting = true;
+    e.preventDefault()
+    if (deleting) return // Prevent multiple simultaneous deletions
+    deleting = true
 
     try {
       const res = await fetch(`/api/project/${$page.params.projectId}`, {
         method: 'DELETE',
-      });
-      const received = await res.json();
+      })
+      const received = await res.json()
       // console.log(received);
-      goto('/dashboard');
+      goto('/dashboard')
     } catch (error) {
-      console.error('Error deleting project:', error);
+      console.error('Error deleting project:', error)
     } finally {
-      deleting = false;
+      deleting = false
     }
   }
   function handleAddMilestone(e: Event) {
@@ -33,9 +33,9 @@
     goto(`/project/${$page.params.projectId}/add-milestone`)
   }
 
-  async function handleCollabReq(e: Event){
+  async function handleCollabReq(e: Event) {
     e.preventDefault()
-  
+
     goto(`/project/${$page.params.projectId}/send-req`)
   }
 </script>
@@ -87,8 +87,8 @@
       <div class="flex gap-4">
         <Separator class="mt-2" orientation="vertical" />
         <div>
-        {#if data.project.milestone.length > 0}
-          {#each data.project.milestone as milestone}
+          {#if data.project.milestone.length > 0}
+            {#each data.project.milestone as milestone}
               <div class="mt-4">
                 <div class="flex gap-4">
                   <h4 class="text-2xl font-semibold">{milestone.title}</h4>
@@ -105,13 +105,13 @@
                   {milestone.description}
                 </p>
               </div>
-              {/each}
-              {:else}
-              <p class="mt-4 text-gray-600 font-semibold text-xl">
-                Project have no milestones currently
-              </p>
-              {/if}
-            </div>
+            {/each}
+          {:else}
+            <p class="mt-4 text-gray-600 font-semibold text-xl">
+              Project have no milestones currently
+            </p>
+          {/if}
+        </div>
       </div>
 
       <div class="mt-10 flex justify-center">
@@ -124,8 +124,10 @@
           >
             Delete Project
           </Button>
-        {:else}
-          <Button variant="secondary" on:click={handleCollabReq}>Send Collaboration Request</Button>
+        {:else if !data.project.hasSentCollabReq}
+          <Button variant="secondary" on:click={handleCollabReq}
+            >Send Collaboration Request</Button
+          >
         {/if}
       </div>
     </div>
